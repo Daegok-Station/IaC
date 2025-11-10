@@ -3,17 +3,9 @@ Terraform code to provision AWS infrastructure and manage security & monitoring 
 
 # Directory Structure
 '''
-IaC/
-└── CICD/
-├── main.tf
-├── provider.tf
-├── vpc_1/
-│ ├── vpc_1.tf
-│ ├── outputs.tf
-│ ├── variables.tf
-│ └── route_table.tf
-└── vpc_2/
-├── vpc_2.tf
-├── outputs.tf
-└── variables.tf
+├── CICD/  #Java-based web server CICD pipeline infrastructure
+│   ├── main.tf
+│   ├── provider.tf
+│   ├── vpc_1/  #VPC_1, Subnet, IGW, NGW, Route Table, EIP
+│   └── vpc_2/  #VPC_2, Subnet, IGW, NGW, Route Table, EIP
 '''
