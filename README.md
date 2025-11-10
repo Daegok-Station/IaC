@@ -2,7 +2,7 @@
 Terraform code to provision AWS infrastructure and manage security & monitoring resources for a DevOps project.
 
 # Directory Structure
-''''
+'''
 IaC/
 └── CICD/
 ├── main.tf
@@ -16,4 +16,4 @@ IaC/
 ├── vpc_2.tf
 ├── outputs.tf
 └── variables.tf
-''''
+'''
