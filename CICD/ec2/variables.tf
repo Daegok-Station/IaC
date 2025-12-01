@@ -1,6 +1,30 @@
 #################################################################################
+#################################### VPC ID #####################################
+#################################################################################
+
+variable "Service_VPC_id" {
+  type = string
+  description = "Service VPC ID"
+}
+
+variable "Jenkins_VPC_id" {
+  type = string
+  description = "Jenkins VPC ID"
+}
+
+variable "Service_VPC_cidr" {
+  type        = string
+  description = "The CIDR block of the Service VPC, used for defining ALB SG egress rules to internal targets."
+}
+
+variable "Jenkins_VPC_cidr" {
+  type = string
+}
+
+#################################################################################
 ################################ Subnet ID ###################################
 #################################################################################
+
 variable "bastion_subnet_id" {
   type = string
   description = "Jenkins VPC Bastion Subnet ID"
@@ -16,29 +40,13 @@ variable "jenkins_subnet_id" {
 #################################################################################
 
 variable "bastion_key_name" {
-  type = string
-  description = "Bastion Key pair"
-  default = "Daegok_bastion_pub"
+  type        = string
+  description = "Bastion Key Name"
 }
 
 variable "jenkins_key_name" {
-  type = string
-  description = "Jenkins Key pair"
-  default = "Daegok_Jenkins_pub"
-}
-
-#################################################################################
-################################## vpc_2_id #####################################
-#################################################################################
-
-variable "Service_VPC_id" {
-  type = string
-  description = "Service VPC ID"
-}
-
-variable "Jenkins_VPC_id" {
-  type = string
-  description = "Jenkins VPC ID"
+  type        = string
+  description = "jenkins Key Name"
 }
 
 #################################################################################
@@ -47,7 +55,7 @@ variable "Jenkins_VPC_id" {
 
 variable "internet_gateway_Jenkins_id" {
   type = string
-  description = "IGW of Bastion Route Table"
+  description = "Bastion IGW"
 }
 
 #################################################################################
@@ -55,16 +63,18 @@ variable "internet_gateway_Jenkins_id" {
 #################################################################################
 
 variable "bastion_sg_id" {
-  type        = string
+  type = string
   description = "Bastion Security Group"
-
 }
 
 variable "jenkins_sg_id" {
-  type        = string
+  type = string
   description = "Jenkins Security Group"
 }
 
+variable "alb_sg_id" {
+  type = string
+}
 
 #################################################################################
 ################################ Route Table ####################################
@@ -139,4 +149,45 @@ variable "alb_policy_json" {
 POLICY
 }
 
-############################ 계속 추가 예정 #################################
+
+variable "ecs_add_role_policy_json" {
+  type        = string
+  description = "ECS 관련 커스텀 정책 JSON"
+  default     = <<JSON
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecs:CreateService",
+        "ecs:UpdateService",
+        "ecs:DeleteService"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+JSON
+}
+
+variable "jenkins_ecs_policy_json" {
+  type        = string
+  description = "Jenkins 관련 커스텀 정책 JSON"
+  default     = <<JSON
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecs:RunTask",
+        "ecs:DescribeTasks",
+        "ecs:StopTask"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+JSON
+}
