@@ -2,7 +2,7 @@
 ####################################### ecs #####################################
 #################################################################################
 
-resource "aws_ecs_cluster" "ecs" {
+resource "aws_ecs_cluster" "Daegok_ecs_cluster" {
   name = "Daegok-Cluster"
 
   setting {
