@@ -30,6 +30,8 @@ module "ec2" {
 
   Jenkins_VPC_cidr = module.Jenkins_VPC.Jenkins_VPC_cidr
   Service_VPC_cidr = module.Service_VPC.Service_VPC_cidr
+
+  jenkins_subnet_cidr = module.ec2.jenkins_subnet_cidr
 }
 
 
