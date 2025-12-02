@@ -18,9 +18,6 @@ output "alb_sg_id" {
 output "blue_listener_arn" {
   value = aws_lb_listener.blue_listener.arn
 }
-output "green_listener_arn" {
-  value = aws_lb_listener.green_listener.arn
-}
 
 output "blue_tg_arn" {
   description = "ARN of the Blue Target Group."
