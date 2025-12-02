@@ -1,6 +1,6 @@
 resource "aws_lb_target_group" "blue" {
   name = "Daegok-blue"
-  port = 80
+  port = 8080
   protocol = "HTTP"
   target_type = "ip"
   vpc_id = var.Service_VPC_id
@@ -19,7 +19,7 @@ resource "aws_lb_target_group" "blue" {
 
 resource "aws_lb_target_group" "green" {
   name = "Daegok-green"
-  port = 80
+  port = 8081
   protocol = "HTTP"
   target_type = "ip"
   vpc_id = var.Service_VPC_id
