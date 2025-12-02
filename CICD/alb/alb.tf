@@ -30,7 +30,7 @@ resource "aws_security_group" "alb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # SSH 허용 (모든 IP)
+  # HTTPS 허용
   ingress {
     from_port   = 443              # 허용 시작 포트
     to_port     = 443              # 허용 끝 포트
@@ -41,9 +41,9 @@ resource "aws_security_group" "alb_sg" {
   ## 아웃바운드 규칙
   # 모든 트래픽 허용
   egress {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = [var.Service_VPC_cidr]
   }
 
