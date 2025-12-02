@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "pipeline_artifact" {
-  bucket = "daegok-pipeline-artifacts-489089"
+  bucket = "daegok-codepipeline-s3-test1239"
 }
 
 resource "aws_s3_bucket_versioning" "pipeline_artifact_versioning" {
@@ -27,10 +27,11 @@ resource "aws_codepipeline" "ecs_pipeline" {
       owner = "AWS"
       provider = "S3"
       output_artifacts = ["source_output"]
-      version = "5"
+      version = "1"
       configuration = {
         S3Bucket = aws_s3_bucket.pipeline_artifact.bucket
-        S3ObjectKey = "MpSBk4X.zip"
+        S3ObjectKey = "Daegok-Petclinic-Artifacts/artifact.zip"
+        PollForSourceChanges  = "false"
       }
     }
   }
@@ -44,7 +45,7 @@ resource "aws_codepipeline" "ecs_pipeline" {
       owner           = "AWS"
       provider        = "CodeDeploy"
       input_artifacts = ["source_output"]
-      version = "5"
+      version = "1"
 
       configuration = {
         ApplicationName     = "Daegok-CodeDeploy"
