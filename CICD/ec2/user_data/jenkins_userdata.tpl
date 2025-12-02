@@ -4,7 +4,7 @@
 sudo yum update -y
 
 # 2. Docker 설치 및 활성화
-sudo dnf install docker -y   
+sudo dnf install docker -y          # Amazon Linux 2023 기준 dnf 사용
 sudo systemctl enable docker
 sudo systemctl start docker
 
@@ -16,7 +16,7 @@ mkdir -p /home/ec2-user/jenkins-docker
 mkdir -p /home/ec2-user/jenkins_home
 sudo chown -R 1000:1000 /home/ec2-user/jenkins_home
 
-# 5. Dockerfile 위치로 이동
+# 5. Dockerfile 위치로 이동 (필요 시 Git clone)
 cd /home/ec2-user/jenkins-docker
 # 예: 필요하다면 Dockerfile Git에서 가져오기 가능
 # git clone <dockerfile_repo_url> .
@@ -44,7 +44,7 @@ cat > /home/ec2-user/jenkins-docker/my-pipeline.xml <<'EOF'
       <userRemoteConfigs>
         <hudson.plugins.git.UserRemoteConfig>
           <url>https://github.com/Daegok-Station/Jenkins-Deploy.git</url>
-          <credentialsId></credentialsId> <!-- private repo이면 Jenkins Credential ID 입력 -->
+          <credentialsId></credentialsId>
         </hudson.plugins.git.UserRemoteConfig>
       </userRemoteConfigs>
       <branches>
@@ -56,7 +56,7 @@ cat > /home/ec2-user/jenkins-docker/my-pipeline.xml <<'EOF'
       <submoduleCfg class="list"/>
       <extensions/>
     </scm>
-    <scriptPath>codedeploy/Jenkinsfile</scriptPath>
+    <scriptPath>codepipeline/Jenkinsfile</scriptPath>
     <lightweight>true</lightweight>
   </definition>
   <triggers/>
