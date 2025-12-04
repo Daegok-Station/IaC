@@ -87,9 +87,10 @@ variable "private_route_table_id" {
 ################################## Policy #######################################
 #################################################################################
 
+# ALB 연동 정책 (CodeDeploy Role에 연결)
 variable "alb_policy_json" {
   type        = string
-  description = "ALB IAM Policy JSON"
+  description = "CodeDeploy가 ECS 블루/그린 배포 시 ALB 리스너/타겟 그룹을 조작하기 위한 IAM Policy JSON"
   default = <<POLICY
 {
   "Version": "2012-10-17",
@@ -143,10 +144,10 @@ variable "alb_policy_json" {
 POLICY
 }
 
-
+#  ECS 서비스 생성/수정/삭제 정책 (CodePipeline Role에 연결 필요)
 variable "ecs_add_role_policy_json" {
   type        = string
-  description = "ECS 관련 커스텀 정책 JSON"
+  description = "ECS 서비스 관리 (Create/Update/Delete) 권한을 제공하는 정책 JSON"
   default     = <<JSON
 {
   "Version": "2012-10-17",
@@ -165,9 +166,10 @@ variable "ecs_add_role_policy_json" {
 JSON
 }
 
+# ECS Task 실행/중지 정책 (Jenkins Agent Role 또는 Task Execution Role에 연결 필요) ---
 variable "jenkins_ecs_policy_json" {
   type        = string
-  description = "Jenkins 관련 커스텀 정책 JSON"
+  description = "ECS Task 실행/모니터링 (RunTask/DescribeTasks/StopTask) 권한을 제공하는 정책 JSON"
   default     = <<JSON
 {
   "Version": "2012-10-17",
@@ -186,12 +188,9 @@ variable "jenkins_ecs_policy_json" {
 JSON
 }
 
-# ec2/variables.tf
-
+# --- 4. Jenkins Agent 핵심 CI/CD 정책 (Local Block) ---
 locals {
-  # Jenkins Agent가 S3에 아티팩트를 업로드하고 CodePipeline 실행을 트리거하기 위한 
-
-  # 1. S3 PutObject 및 GetLocation 권한 정책
+  # 1. Jenkins Agent의 S3 업로드 권한 정책
   jenkins_s3_policy_document = <<-EOT
 {
     "Version": "2012-10-17",
@@ -211,7 +210,7 @@ locals {
 }
 EOT
 
-  # 2. CodePipeline 실행 권한 정책
+  # 2. Jenkins Agent의 CodePipeline 실행 권한 정책
   jenkins_codepipeline_policy_document = <<-EOT
 {
     "Version": "2012-10-17",
@@ -245,4 +244,12 @@ variable "aws_region" {
 variable "aws_account_id" {
   description = "AWS 계정 ID"
   type        = string
+}
+
+variable "pipeline_artifact_arn" {
+  
+}
+
+variable "artifact_bucket_arn" {
+
 }
