@@ -13,8 +13,12 @@ resource "aws_codedeploy_deployment_group" "ecs_deployment_group" {
     deployment_config_name = "CodeDeployDefault.ECSLinear10PercentEvery1Minutes" # 옵션: Canary, Linear 등
     auto_rollback_configuration {
         enabled = true               # 자동 롤백 활성화
-        events  = ["DEPLOYMENT_FAILURE"]  # 배포 실패 시 롤백 
+        events  = ["DEPLOYMENT_FAILURE"]  # 배포 실패 시 롤백
     }
+
+    depends_on = [
+      var.ecs_service_arn
+    ]
 
     # 배포 성공 시 기존 BLUE Task 어떻게 할지
     blue_green_deployment_config {
@@ -27,10 +31,11 @@ resource "aws_codedeploy_deployment_group" "ecs_deployment_group" {
         action_on_timeout = "CONTINUE_DEPLOYMENT"
         wait_time_in_minutes = 0
         }
+    }
 
-        green_fleet_provisioning_option {
-        action = "DISCOVER_EXISTING"
-        }
+  deployment_style {
+        deployment_type   = "BLUE_GREEN"
+        deployment_option = "WITH_TRAFFIC_CONTROL"
     }
 
   ecs_service {
@@ -51,11 +56,6 @@ resource "aws_codedeploy_deployment_group" "ecs_deployment_group" {
           var.blue_listener_arn
         ]
       }
-      test_traffic_route {
-        listener_arns = [
-          var.green_listener_arn
-        ]
       }
     }
   }
-}
