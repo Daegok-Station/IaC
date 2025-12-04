@@ -12,7 +12,7 @@ resource "aws_s3_bucket_versioning" "pipeline_artifact_versioning" {
 
 resource "aws_codepipeline" "ecs_pipeline" {
   name     = "Daegok-Codepipeline"
-  role_arn = var.codedeploy_role_arn
+  role_arn = var.codepipeline_role_arn
 
   artifact_store {
     location = aws_s3_bucket.pipeline_artifact.bucket
