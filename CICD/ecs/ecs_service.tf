@@ -28,11 +28,12 @@ resource "aws_ecs_service" "Daegok_ecs_service" {
     container_port   = 8080
   }
 
-  # load balancer 연결 (green 타겟 그룹, 동일한 설정이지만 target_group만 다름)
-  load_balancer {
-    target_group_arn = var.green_tg_arn
-    container_name   = "web"
-    container_port   = 8080
+  lifecycle {
+    # CodeDeploy에 의해 변경될 수 있는 속성들을 Terraform이 무시하도록 설정합니다.
+    ignore_changes = [
+      platform_version,
+      task_definition,
+    ]
   }
 
   health_check_grace_period_seconds = 60    # 컨테이너 뜨고 헬스체크 통과 기다리는 시간
