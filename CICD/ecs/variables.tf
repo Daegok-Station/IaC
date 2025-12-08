@@ -21,11 +21,6 @@ variable "blue_listener_arn" {
   description = "Blue listener ARN received from the ALB module."
 }
 
-variable "green_listener_arn" {
-  type        = string
-  description = "Blue listener ARN received from the ALB module."
-}
-
 variable "blue_tg_arn" {
   type        = string
   description = "ARN of the Blue Target Group received from the ALB module."
