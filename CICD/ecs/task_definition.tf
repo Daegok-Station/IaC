@@ -1,7 +1,3 @@
-#################################################################################
-################################ ECS Task Definition ############################
-#################################################################################
-
 resource "aws_ecs_task_definition" "task_definition" {
   family = "Daegok-Petclinic-task"
 
@@ -9,8 +5,7 @@ resource "aws_ecs_task_definition" "task_definition" {
   requires_compatibilities = ["FARGATE"]
   cpu    = "256"
   memory = "512"
-  execution_role_arn = "arn:aws:iam::954382416992:role/ecsTaskExecutionRole"
-
+  execution_role_arn = var.ecs_task_execution_role_arn
   container_definitions = <<TASK_DEFINITION
 [
   {
@@ -44,3 +39,4 @@ resource "aws_ecs_task_definition" "task_definition" {
 ]
 TASK_DEFINITION
 }
+
