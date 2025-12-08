@@ -12,3 +12,9 @@ output "task_definition_arn" {
   value = aws_ecs_task_definition.task_definition.arn
   description = "ECS Task Definition ARN"
 }
+
+# ecs/outputs.tf 파일에 추가
+output "ecs_service_arn" {
+  description = "The ARN of the ECS Service."
+  value       = aws_ecs_service.Daegok_ecs_service.arn # 또는 .arn
+}
