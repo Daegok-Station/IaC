@@ -101,7 +101,8 @@ resource "aws_iam_policy" "codepipeline_s3_access_policy" {
         "s3:GetObject",
         "s3:GetObjectVersion",
         "s3:GetBucketVersioning",
-        "s3:PutObject"
+        "s3:PutObject",
+        "s3:ListBucket"
       ]
       Resource = [
         # S3 버킷 리소스 ARN을 참조해야 함 (aws_s3_bucket.pipeline_artifact는 다른 파일에 정의)
